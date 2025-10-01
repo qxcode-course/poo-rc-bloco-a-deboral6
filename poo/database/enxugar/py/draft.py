@@ -11,20 +11,25 @@ class Towel:
             return 20
         if self.size == "G":
             return 30
-        return 0 
+        return 0
+    
     def dry(self, amount: int):
         self.wetness += amount
         if self.wetness >= self.isMaxWetness():
             print("toalha encharcada")
             self.wetness = self.isMaxWetness()
 
+    def isDry(self) -> bool:
+        return self.wetness == 0
+
     def __str__(self) -> str: 
         return f"Cor: {self.color}, Tamanho: {self.size}, Umidade: {self.wetness}"
+
 def main():   
-    towel: Towel = Towel("", "")
-    print("$" + line)
+    towel = None
     while True:
         line: str = input()
+        print("$" + line)
         args: list[str] = line.split(" ")
 
         if args[0] == "end":
@@ -34,14 +39,21 @@ def main():
             size: str = args[2]
             towel = Towel(color, size)
         elif args[0] == "seca":
-            print("sim" if towel.isDry() else "nao")
-
+            if towel is None:
+                print("fail: nenhuma toalha criada")
+            else:
+                print("sim" if towel.isDry() else "nao")
         elif args[0] == "torcer":
-            towel.wrig
-            amount: int = int(args[1])
-            towel.dry(amount)
+            if towel is None:
+                print("fail: nenhuma toalha criada")
+            else:
+                amount: int = int(args[1])
+                towel.dry(amount)
         elif args[0] == "mostrar":
-            print(towel)
+            if towel is None:
+                print("fail: nenhuma toalha criada")
+            else:
+                print(towel)
         else:
             print("fail: comando não encontrado")
 
